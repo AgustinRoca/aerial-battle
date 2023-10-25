@@ -1,4 +1,4 @@
-import agent
+import agent1
 import agent2
 import gui
 
@@ -51,33 +51,32 @@ def count_hits(board, hit_board, airship):
                     count += 1
     return count
 
-def is_gameover(board, hit_board):
+def has_airships_alive(board, hit_board):
     for x in range(len(board)):
         for y in range(len(board[0])):
             for z in range(len(board[0][0])):
                 if board[x][y][z] != 'EMPTY' and hit_board[x][y][z] == '?':
-                    return False
-    return True
+                    return True
+    return False
 
 
 def main():
-    board1 = agent.get_starting_board()
-    board2 = agent2.get_starting_board()
-
-    hit_board_1 = new_hit_board()
-    hit_board_2 = new_hit_board()
+    player = 0
+    other_player = 1
+    agents = [agent1,  agent2]
+    boards = [agent1.get_starting_board(), agent2.get_starting_board()]
+    hit_boards = [new_hit_board(), new_hit_board()]
 
     i = 0
-    while not is_gameover(board1, hit_board_1) and not is_gameover(board2, hit_board_2):
-        coordinates1 = agent.next_turn(hit_board_1)
-        shoot(board1, hit_board_1, coordinates1)
-        coordinates2 = agent2.next_turn(hit_board_2)
-        shoot(board2, hit_board_2, coordinates2)
-        gui.show_airships_board(board1, hit_board_1, hit_board_2)
-        i += 1
 
-    print(i)
-    print('Player 1' if is_gameover(board2, hit_board_2) else 'Player 2')
+    while has_airships_alive(boards[player], hit_boards[other_player]):
+        coordinates = agents[player].next_turn(hit_boards[player])
+        shoot(boards[other_player], hit_boards[player], coordinates)
+        #gui.show_airships_board(boards[player], hit_boards[player], hit_boards[other_player])
+        i += 1
+        player, other_player = other_player, player
+
+    print(f"Player {other_player} won in {i//2} turns.")
 
 if __name__ == '__main__':
     main()

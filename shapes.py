@@ -8,25 +8,21 @@ def new_board():
                 board[x][y].append('EMPTY')
     return board
 
-def balloon_shape():
+def prismatic_shape(x_len,y_len,z_len):
     shape = []
-    for x in range(3):
+    for x in range(x_len):
         shape.append([])
-        for y in range(3):
+        for y in range(y_len):
             shape[x].append([])
-            for z in range(3):
+            for z in range(z_len):
                 shape[x][y].append(1)
     return shape
 
+def balloon_shape():
+    return prismatic_shape(3,3,3)
+
 def zeppelin_shape():
-    shape = []
-    for x in range(5):
-        shape.append([])
-        for y in range(2):
-            shape[x].append([])
-            for z in range(2):
-                shape[x][y].append(1)
-    return shape
+    return prismatic_shape(5,2,2)
 
 def plane_shape():
     shape = []
@@ -48,10 +44,7 @@ def plane_shape():
     return shape
 
 def elevator_shape():
-    shape = [[[]]]
-    for z in range(10):
-        shape[0][0].append(1)
-    return shape
+    return prismatic_shape(1,1,10)
 
 def rotate_shape_anticlockwise(shape):
     rotated_shape = []
@@ -61,16 +54,5 @@ def rotate_shape_anticlockwise(shape):
             rotated_shape[x].append([])
             for z in range(len(shape[0][0])):
                 rotated_shape[x][y].append(shape[y][len(shape[0]) - x - 1][z])
-
-    return rotated_shape
-
-def rotate_shape_clockwise(shape):
-    rotated_shape = []
-    for x in range(len(shape[0])):
-        rotated_shape.append([])
-        for y in range(len(shape)):
-            rotated_shape[x].append([])
-            for z in range(len(shape[0][0])):
-                rotated_shape[x][y].append(shape[len(shape) - y - 1][x][z])
 
     return rotated_shape
