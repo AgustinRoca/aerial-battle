@@ -13,12 +13,33 @@ def next_turn(hit_board: tuple) -> tuple:
     """
     
     possible_turns = []
+    hits = []
+    probable_hits = []
     for x in range(len(hit_board)):
         for y in range(len(hit_board[0])):
             for z in range(len(hit_board[0][0])):
                 if hit_board[x][y][z] == '?':
                     possible_turns.append((x, y, z))
-    return random.choice(possible_turns)
+                elif hit_board[x][y][z] == 'HIT':
+                    hits.append((x, y, z))
+
+    if len(hits) > 0:
+        for x,y,z in hits:
+            if x < len(hit_board) - 1 and hit_board[x+1][y][z] == '?':
+                probable_hits.append((x+1, y, z))
+            if x > 0 and hit_board[x-1][y][z] == '?':
+                probable_hits.append((x-1, y, z))
+            if y < len(hit_board[0]) - 1 and hit_board[x][y+1][z] == '?':
+                probable_hits.append((x, y+1, z))
+            if y > 0 and hit_board[x][y-1][z] == '?':
+                probable_hits.append((x, y-1, z))
+            if z < len(hit_board[0][0]) - 1 and hit_board[x][y][z+1] == '?':
+                probable_hits.append((x, y, z+1))
+            if z > 0 and hit_board[x][y][z-1] == '?':
+                probable_hits.append((x, y, z-1))
+        return random.choice(probable_hits)
+    else:  
+        return random.choice(possible_turns)
 
 def get_starting_board():
     """

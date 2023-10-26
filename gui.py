@@ -38,7 +38,7 @@ def hit_board_to_voxelarray(board, colors_dict):
 
     return miss_voxelarray, colors, hit_voxelarray, hit_colors
 
-def show_airships_board(board, hit_board, hit_board_2):
+def show_airships_board(board, hit_board, hit_board_2, player):
     colors_dict = {
         'BALLOON': 'steelblue',
         'ZEPPELIN': 'lightcoral',
@@ -60,7 +60,7 @@ def show_airships_board(board, hit_board, hit_board_2):
     ax.set_xlabel('x')
     ax.set_ylabel('y')
     ax.set_zlabel('z')
-    ax.title.set_text('Player 1 board')
+    ax.title.set_text(f'Player {player} board')
 
     ax = subfigs[1].add_subplot(projection='3d')
     voxelarray, colors, hit_voxelarray, hit_colors = hit_board_to_voxelarray(hit_board, hit_colors_dict)
@@ -69,6 +69,6 @@ def show_airships_board(board, hit_board, hit_board_2):
     ax.set_xlabel('x')
     ax.set_ylabel('y')
     ax.set_zlabel('z')
-    ax.title.set_text('Player 1 hit board')
+    ax.title.set_text(f'Player {player} hit board')
 
     plt.show()

@@ -51,6 +51,15 @@ def count_hits(board, hit_board, airship):
                     count += 1
     return count
 
+def count_total_hits(hit_board):
+    count = 0
+    for x in range(len(hit_board)):
+        for y in range(len(hit_board[0])):
+            for z in range(len(hit_board[0][0])):
+                if hit_board[x][y][z] == 'HIT':
+                    count += 1
+    return count
+
 def has_airships_alive(board, hit_board):
     for x in range(len(board)):
         for y in range(len(board[0])):
@@ -72,7 +81,9 @@ def main():
     while has_airships_alive(boards[player], hit_boards[other_player]):
         coordinates = agents[player].next_turn(hit_boards[player])
         shoot(boards[other_player], hit_boards[player], coordinates)
-        #gui.show_airships_board(boards[player], hit_boards[player], hit_boards[other_player])
+        hits = count_total_hits(hit_boards[player])
+        if (player == 0 and (i//2 % 20) == 0) or (player == 0 and hits != 0):
+            gui.show_airships_board(boards[player], hit_boards[player], hit_boards[other_player], player)
         i += 1
         player, other_player = other_player, player
 
